@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas-App - Iniciar Sesión</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+    <ul class="nav">
+        <li onclick="showLogin()">Iniciar sesión</li>
+        <li onclick="showSignup()">Registrarse</li>
+        <li onclick="showForgotPassword()">¿Olvidaste tu contraseña?</li>
+        <li onclick="showSubscribe()">Suscribirse</li>
+        <li onclick="showContactUs()">Contáctanos</li>
+    </ul>
+
+
+    <div class="wrapper">
+        <div class="rec-prism">
+            <div class="face face-top">
+                <div class="content">
+                    <h2>Suscribirse</h2>
+                    <small>¡Ingresa tu correo para enviarte las últimas actualizaciones!</small>
+                    <form onsubmit="event.preventDefault()">
+                        <div class="field-wrapper">
+                            <input type="text" name="email" placeholder="correo electrónico">
+                            <label>Correo electrónico</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="submit" onclick="showThankYou()">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="face face-front">
+                <div class="content">
+                    <h2>Iniciar sesión</h2>
+                    <form onsubmit="event.preventDefault()">
+                        <div class="field-wrapper">
+                            <input type="text" name="username" placeholder="usuario" id="txtUsuario">
+                            <label>Usuario</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="password" name="password" placeholder="contraseña" autocomplete="new-password">
+                            <label>Contraseña</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="submit" onclick="login()">
+                        </div>
+                        <span class="psw" onclick="showForgotPassword()">¿Olvidaste tu contraseña?</span>
+                        <span class="signup" onclick="showSignup()">¿No tienes cuenta? Regístrate</span>
+                    </form>
+                </div>
+            </div>
+
+            <div class="face face-back">
+                <div class="content">
+                    <h2>¿Olvidaste tu contraseña?</h2>
+                    <small>Ingresa tu correo para enviarte un enlace de recuperación</small>
+                    <form onsubmit="event.preventDefault()">
+                        <div class="field-wrapper">
+                            <input type="text" name="email" placeholder="correo electrónico">
+                            <label>Correo electrónico</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="submit" onclick="showThankYou()">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="face face-right">
+                <div class="content">
+                    <h2>Registrarse</h2>
+                    <form onsubmit="event.preventDefault()">
+                        <div class="field-wrapper">
+                            <input type="text" name="email" placeholder="correo electrónico">
+                            <label>Correo electrónico</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="password" name="password" placeholder="contraseña" autocomplete="new-password">
+                            <label>Contraseña</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="password" name="password2" placeholder="repetir contraseña" autocomplete="new-password">
+                            <label>Repetir contraseña</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="submit" onclick="showThankYou()">
+                        </div>
+                        <span class="singin" onclick="login()">¿Ya tienes cuenta? Inicia sesión</span>
+                    </form>
+                </div>
+            </div>
+
+            <div class="face face-left">
+                <div class="content">
+                    <h2>Contáctanos</h2>
+                    <form onsubmit="event.preventDefault()">
+                        <div class="field-wrapper">
+                            <input type="text" name="name" placeholder="nombre">
+                            <label>Nombre</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="text" name="email" placeholder="correo electrónico">
+                            <label>Correo electrónico</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <textarea placeholder="tu mensaje"></textarea>
+                            <label>Tu mensaje</label>
+                        </div>
+                        <div class="field-wrapper">
+                            <input type="submit" onclick="showThankYou()">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="face face-bottom">
+                <div class="content">
+                    <div class="thank-you-msg">
+                        ¡Gracias!
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+<script src="../js/script.js"></script>
+</html>

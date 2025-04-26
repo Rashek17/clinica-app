@@ -1,0 +1,144 @@
+/* style.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.nav {
+    position: absolute;
+    top: 20px;
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    color: #333;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.nav li {
+    background-color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav li:hover {
+    background-color: #e0e0e0;
+}
+
+.wrapper {
+    perspective: 1000px;
+    width: 300px;
+    height: 400px;
+    position: relative;
+}
+
+.rec-prism {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 1s ease-in-out;
+}
+
+.face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    transform-origin: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.face-front  { transform: rotateY(0deg) translateZ(150px); }
+.face-back   { transform: rotateY(180deg) translateZ(150px); }
+.face-right  { transform: rotateY(90deg) translateZ(150px); }
+.face-left   { transform: rotateY(-90deg) translateZ(150px); }
+.face-top    { transform: rotateX(90deg) translateZ(150px); }
+.face-bottom { transform: rotateX(-90deg) translateZ(150px); }
+
+.content {
+    text-align: center;
+}
+
+.field-wrapper {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* Centrando los inputs y textarea */
+input[type="text"],
+input[type="password"],
+input[type="submit"],
+textarea {
+    width: 95%;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #ddd;
+    color: #333;
+    border-radius: 5px;
+    margin-top: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: block; /* Esto hace que el elemento se comporte como bloque */
+    margin-left: auto; /* Centra el elemento */
+    margin-right: auto; /* Centra el elemento */
+}
+
+label {
+    font-size: 0.8em;
+    margin-top: 5px;
+    color: #555;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+.thank-you-msg {
+    font-size: 1.5em;
+    color: #4caf50;
+    animation: success 0.5s ease-out forwards;
+}
+
+/* Keyframe estándar y con prefijo */
+@keyframes success {
+    from {
+      transform: translate(-50%, -50%) rotate(0) scale(0);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+    }
+}
+
+@-webkit-keyframes success {
+    from {
+      -webkit-transform: translate(-50%, -50%) rotate(0) scale(0);
+    }
+    to {
+      -webkit-transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+    }
+}
+form {
+    width: 100%;
+    max-width: 400px; /* Puedes ajustar el valor según el tamaño que prefieras */
+    margin: 0 auto; /* Centra el formulario */
+}
