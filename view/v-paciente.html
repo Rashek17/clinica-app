@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel del Paciente</title>
+  <link rel="stylesheet" href="../css/paciente.css" />
+</head>
+
+<!-- Estilo del popup -->
+<style>
+  #popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+
+  #reprogramar-form {
+    background: #fff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 100%;
+    animation: aparecer 0.3s ease-in-out;
+  }
+
+  #reprogramar-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  #reprogramar-form input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+
+  #reprogramar-form button {
+    margin-top: 15px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  #confirmarReprogramacion {
+    background-color: #28a745;
+    color: white;
+  }
+
+  #cancelarReprogramacion {
+    background-color: #dc3545;
+    color: white;
+  }
+
+  @keyframes aparecer {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .cancelar-btn {
+    background-color: #dc3545;
+    /* Rojo */
+    color: white;
+    /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+  }
+
+  .noticias-section {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+  }
+
+  .noticias-section h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #007bff;
+  }
+
+  .noticia-card {
+    display: flex;
+    gap: 16px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+
+  .noticia-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .noticia-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .noticia-content {
+    flex: 1;
+  }
+
+  .noticia-content h3 {
+    font-size: 18px;
+    margin: 0 0 5px 0;
+  }
+
+  .noticia-content p {
+    margin: 0;
+    color: #555;
+    font-size: 14px;
+  }
+
+  .service-section-header {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-end;
+    background-color: #f4f6f8;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .dropdown-field,
+  .input-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 170px;
+  }
+
+  label {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  select,
+  input[type="date"],
+  input[type="time"],
+  input[type="text"] {
+    font-size: 16px;
+    padding: 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    width: 90%;
+  }
+
+  .flat-button {
+    padding: 14px 24px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  .flat-button:hover {
+    background-color: #0056b3;
+  }
+
+  .ph-caret-down {
+    position: absolute;
+    right: 16px;
+    top: 40px;
+    pointer-events: none;
+    font-size: 20px;
+  }
+
+  .transfer-details-row {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .transfer-column {
+    flex: 1;
+    padding: 10px;
+    border-right: 1px solid #ccc;
+  }
+
+  .transfer-column:last-child {
+    border-right: none;
+  }
+
+  .transfer-column dt {
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .transfer-column dd {
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .flat-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4c1fa0;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .flat-button:hover {
+    background-color: #ccc;
+  }
+
+  .flat-button.red {
+    background-color: #e74c3c;
+    color: white;
+  }
+
+  .flat-button.red:hover {
+    background-color: #c0392b;
+  }
+
+
+
+  .transfer.cancelada {
+    background-color: #ffe5e5;
+    /* Rojo muy claro */
+    border-left: 5px solid #ff0000;
+    /* Borde rojo */
+    opacity: 0.9;
+  }
+
+  .transfer.cancelada .actions {
+    display: none;
+    /* Oculta los botones de acción en las citas canceladas */
+  }
+</style>
+
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="app-header-logo">
+        <div class="logo">
+          <span class="logo-icon">
+            <img src="https://assets.codepen.io/285131/almeria-logo.svg" />
+          </span>
+          <h1 class="logo-title">
+            <span>Citas</span>
+            <span>App</span>
+          </h1>
+        </div>
+      </div>
+      <div class="app-header-navigation">
+        <div class="tabs">
+          <a href="#"></a>
+          <a href="#"></a>
+          <a href="#"></a>
+          <a href="#"></a>
+          <a href="#"></a>
+        </div>
+      </div>
+      <div class="app-header-actions">
+        <button class="user-profile">
+          <span></span>
+          <span>
+          </span>
+        </button>
+        <div class="app-header-actions-buttons">
+          <button class="icon-button large">
+            <i class="ph-magnifying-glass"></i>
+          </button>
+          <button class="icon-button large">
+            <i class="ph-bell"></i>
+          </button>
+        </div>
+      </div>
+      <div class="app-header-mobile">
+        <button class="icon-button large">
+          <i class="ph-list"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="app-body">
+      <div class="app-body-navigation">
+        <nav class="navigation">
+          <div class="">
+            <h2>Noticias de salud para ti</h2>
+
+            <div class="noticia-card">
+              <div class="noticia-content">
+                <h3>¿Cómo prevenir la hipertensión?</h3>
+                <p>Descubre hábitos simples para cuidar tu presión arterial y mejorar tu salud cardiovascular.</p>
+              </div>
+            </div>
+
+            <div class="noticia-card">
+              <div class="noticia-content">
+                <h3>Alimentación para pacientes con diabetes</h3>
+                <p>Consejos prácticos para mantener niveles estables de glucosa con una dieta balanceada.</p>
+              </div>
+            </div>
+
+            <div class="noticia-card">
+              <div class="noticia-content">
+                <h3>Nuevas terapias en telemedicina</h3>
+                <p>Conoce cómo la tecnología está transformando el acceso y seguimiento médico desde casa.</p>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <footer class="footer">
+          <h1>Citas-APP<small>©</small></h1>
+          <div>
+            Citas-APP ©<br />
+            Todos los derechos reservados 2025
+          </div>
+        </footer>
+      </div>
+
+      <div class="app-body-main-content">
+        <section class="service-section">
+          <h2>Solicitar Cita</h2>
+          <div class="service-section-header">
+            <div class="dropdown-field">
+              <label for="descripcion">Tipo de cita:</label>
+              <select id="descripcion" name="descripcion"
+                class="block w-full px-4 py-2 border border-gray-300 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="3">Medicina general</option>
+                <option value="4">Odontología</option>
+                <option value="1">Pediatría</option>
+                <option value="2">Ginecología</option>
+                <option value="5">Psicología</option>
+                <option value="6">Cardiología</option>
+                <option value="7">Dermatología</option>
+                <option value="8">Neurología</option>
+                <option value="9">Psiquiatría</option>
+                <option value="10">Traumatología</option>
+                <option value="11">Oftalmología</option>
+                <option value="12">Otorrinolaringología</option>
+                <option value="13">Urología</option>
+                <option value="14">Endocrinología</option>
+                <option value="15">Oncología</option>
+                <option value="16">Gastroenterología</option>
+                <option value="17">Neumología</option>
+                <option value="18">Reumatología</option>
+                <option value="19">Nefrología</option>
+                <option value="20">Hematología</option>
+s
+              </select>
+
+              <i class="ph-caret-down"></i>
+            </div>
+
+            <div class="input-field">
+              <label for="fecha">Fecha:</label>
+              <input type="date" id="fecha" />
+            </div>
+
+            <div class="input-field">
+              <label for="hora">Hora:</label>
+              <input type="time" id="hora" />
+            </div>
+
+            <button class="flat-button" onclick="guardarCita()">
+              Guardar
+            </button>
+          </div>
+
+          <div class="mobile-only">
+          </div>
+          <div class="tiles">
+
+          </div>
+          <div class="service-section-footer">
+            <p>
+              Los servicios se prestan conforme a la disponibilidad médica y
+              agenda establecida.
+            </p>
+          </div>
+        </section>
+
+        <section class="transfer-section">
+          <div class="transfer-section-header">
+            <h2>Últimas Citas</h2>
+            <div class="filter-options">
+              <p>Filtro activo: últimos 30 días</p>
+              <button class="icon-button"><i class="ph-funnel"></i></button>
+              <button class="icon-button"><i class="ph-plus"></i></button>
+            </div>
+          </div>
+          <div class="transfers">
+
+        </section>
+      </div>
+
+      <div class="app-body-sidebar">
+        <section class="payment-section">
+          <h2>Agendar Nueva Cita</h2>
+          <div class="payment-section-header">
+            <p>Seleccione el tipo de consulta</p>
+            <div>
+              <button class="card-button">Presencial</button>
+              <button class="card-button active">Virtual</button>
+            </div>
+          </div>
+
+          <div class="payments" id="citas-list">
+            <!-- Aquí se cargarán dinámicamente las citas -->
+          </div>
+
+          <div class="faq">
+            <p>Preguntas frecuentes</p>
+            <div>
+              <label>Consulta</label> <br> <br>
+              <input type="text" placeholder="Escriba su duda aquí" />
+            </div>
+          </div> <br>
+
+          <div class="payment-section-footer">
+            <button class="save-button flat-button"">Confirmar</button>
+            <button class=" settings-button flat-button"">
+              <i class="ph-gear"></i><span>Más opciones</span>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <input type="hidden" id="id_usuario_login">
+
+      <!-- Contenedor del popup -->
+      <div id="popup-overlay">
+        <div id="reprogramar-form">
+          <label for="nuevaFecha">Nueva Fecha:</label>
+          <input type="date" id="nuevaFecha" required />
+
+          <label for="nuevaHora">Nueva Hora:</label>
+          <input type="time" id="nuevaHora" required />
+
+          <button id="confirmarReprogramacion">Confirmar</button>
+          <button id="cancelarReprogramacion">Cancelar</button>
+        </div>
+      </div>
+
+</body>
+<script src="../js/script.js"></script>
+
+</html>

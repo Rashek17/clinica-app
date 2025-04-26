@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Módulo Administrador</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/administrador.css" />
+
+
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <div class="logo">
+          <div class="logo-icon">
+            <img src="https://img.icons8.com/color/48/000000/user-male-circle--v1.png" alt="Usuario">
+          </div>
+          <span class="logo-title">Administrador</span>
+        </div>
+        <div class="app-header-navigation">
+          <nav class="tabs">
+            <a href="#">Inicio</a>
+            <a href="#" class="active">Usuarios</a>
+            <a href="#">Agenda Global</a>
+          </nav>
+        </div>
+        <button class="user-profile">
+            <img src="https://img.icons8.com/color/48/000000/user-male-circle--v1.png" alt="Usuario">
+          <span>Administrador</span>
+        </button>
+      </header>
+
+      <div class="app-body">
+        <nav class="app-body-navigation">
+          <div class="navigation">
+            <a href="#">🏠 Dashboard</a>
+            <a href="#">👨‍⚕️ Gestión de Médicos</a>
+            <a href="#">🧑‍🤝‍🧑 Gestión de Pacientes</a>
+            <a href="#">📅 Agenda Global</a>
+          </div>
+          <footer class="footer">© 2025 Gestión Médica</footer>
+        </nav>
+
+        <main class="app-body-main-content">
+          <section class="service-section">
+            <header class="service-section-header">
+              <h2>Gestión de Usuarios</h2>
+              <button class="flat-button">+ Nuevo Usuario</button>
+            </header>
+            <div class="tiles">
+              <div class="tile">
+                <div class="tile-header">
+                  <span>👨‍⚕️</span>
+                  <h3>Médicos</h3>
+                </div>
+                <p>Alta y baja de médicos registrados.</p>
+                <button class="flat-button">Gestionar</button>
+              </div>
+              <div class="tile">
+                <div class="tile-header">
+                  <span>🧑‍🤝‍🧑</span>
+                  <h3>Pacientes</h3>
+                </div>
+                <p>Alta y baja de pacientes registrados.</p>
+                <button class="flat-button">Gestionar</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="service-section">
+            <header class="service-section-header">
+              <h2>Agenda Global</h2>
+              <div class="search-field">
+                <input
+                  type="text"
+                  placeholder="Buscar cita, médico o paciente..."
+                />
+              </div>
+            </header>
+            <div class="tiles">
+              <div class="tile">
+                <h3>Citas por día</h3>
+                <p>Visualización global de citas agendadas.</p>
+                <button class="flat-button">Ver Agenda</button>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

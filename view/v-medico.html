@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma Médica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/medico.css">
+</head>
+
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="logo">
+        <div class="logo-icon">
+          <img src="https://img.icons8.com/ios-filled/50/4f46e5/hospital.png" alt="Logo">
+        </div>
+        <div class="logo-title">Plataforma Médica - Medicos</div>
+      </div>
+      <nav class="app-header-navigation">
+        <div class="tabs">
+          <a href="#" class="active">Inicio</a>
+          <a href="#">Citas</a>
+          <a href="#">Historial</a>
+        </div>
+      </nav>
+      <button class="user-profile">
+        <img src="https://img.icons8.com/color/48/000000/user-male-circle--v1.png" alt="Usuario">
+        <span>Hever</span>
+      </button>
+    </header>
+
+    <div class="app-body">
+      <nav class="app-body-navigation">
+        <div class="navigation">
+         
+        </div>
+        <div class="footer">
+          &copy; 2025 Plataforma Médica
+        </div>
+      </nav>
+
+      <main class="app-body-main-content">
+        <section class="service-section">
+          <div class="service-section-header">
+            <h2>Bienvenido, Hever</h2>
+            <div class="search-field">
+              <input type="text" placeholder="Buscar doctor o especialidad...">
+            </div>
+          </div>
+
+          <div class="tiles">
+            <div class="tile">
+              <div class="tile-header">
+                <img src="https://img.icons8.com/color/48/stethoscope.png" alt="">
+                <div>
+                  <strong>Citas Activas</strong>
+                  <p class="text-light">Ver tus próximas consultas</p>
+                  <button id="ver-citas" onclick="obtenerCitasMedico()">Ver</button>
+                </div>
+                <!-- Contenedor donde se insertarán las citas -->
+                <div id="citas-medico" class="citas-container mt-4" style="display: none;"></div>
+              </div>
+            </div>
+            
+
+            <div class="tile">
+              <div class="tile-header">
+                <img src="https://img.icons8.com/color/48/medical-history.png" alt="">
+                <div>
+                  <strong>Historial Médico</strong>
+                  <p class="text-light">Consulta tus antecedentes</p>
+                </div>
+              </div>
+            </div>
+            <div class="tile">
+              <div class="tile-header">
+                <img src="https://img.icons8.com/color/48/doctor-male.png" alt="">
+                <div>
+                  <strong>Doctores</strong>
+                  <p class="text-light">Especialistas disponibles</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+
+<script src="../js/script.js"></script>
+
+</html>
