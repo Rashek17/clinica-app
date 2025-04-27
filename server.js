@@ -18,7 +18,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root", // Usuario de MySQL (por defecto en XAMPP)
   password: "", // Contraseña de MySQL (por defecto vacía en XAMPP)
-  database: "clinica-app", // Nombre de tu base de datos
+  database: "clinica_app", // Nombre de tu base de datos
 });
 
 // Conectar a la base de datos
