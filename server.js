@@ -16,9 +16,9 @@ app.use(cors()); // Habilitar CORS para todas las rutas
 // Crear la conexión a MySQL
 const connection = mysql.createConnection({
   host: "localhost",
-  user: "root", // Usuario de MySQL (por defecto en XAMPP)
-  password: "", // Contraseña de MySQL (por defecto vacía en XAMPP)
-  database: "clinica_app", // Nombre de tu base de datos
+  user: "root", 
+  password: "", 
+  database: "clinica-app", 
 });
 
 // Conectar a la base de datos
@@ -454,6 +454,24 @@ app.get('/citas', (req, res) => {
     res.status(200).json(results);
   });
 });
+
+
+app.get("/pacientes", (req, res) => {
+  const query = `
+    SELECT u.id_usuario, u.nombre, u.correo, u.telefono, u.edad, r.nombre AS rol
+    FROM usuarios u
+    INNER JOIN rol r ON u.id_rol = r.id_rol;
+  `;
+  
+  connection.query(query, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Error al obtener los usuarios" });
+    }
+    res.json(results);
+  });
+});
+
 
 
 

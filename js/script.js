@@ -301,6 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
     obtenerCitasUsuario();
   }
   cargarMedicosAdmin();
+  cargarUsuarios();
 });
 
 function obtenerCitasMedico() {
@@ -589,4 +590,32 @@ function cargarCitas() {
       alert('No se pudieron cargar las citas');
     });
 }
-  document.getElementById('modalCitas').addEventListener('show.bs.modal', cargarCitas);
+document.getElementById('modalCitas').addEventListener('show.bs.modal', cargarCitas);
+
+
+function cargarUsuarios() {
+  fetch('http://localhost:3000/pacientes')
+    .then(response => response.json())
+    .then(usuarios => {
+      const tbody = document.querySelector('#modalPacientes table tbody');
+      tbody.innerHTML = ''; // Limpiar la tabla antes de cargar nueva información
+
+      usuarios.forEach(usuario => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${usuario.nombre}</td>
+          <td>${usuario.correo}</td>
+          <td>${usuario.telefono}</td>
+          <td>${usuario.edad}</td>
+          <td>${usuario.rol}</td>
+          <td><button class="btn btn-danger" onclick="verCitas(${usuario.id_usuario})">Eliminar</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(error => {
+      console.error(error);
+      alert('No se pudieron cargar los usuarios');
+    });
+}
+
