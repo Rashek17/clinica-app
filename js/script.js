@@ -302,6 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   cargarMedicosAdmin();
   cargarUsuarios();
+  cargarCitas();
 });
 
 function obtenerCitasMedico() {
@@ -519,7 +520,7 @@ function cargarMedicosAdmin() {
         });
       });
     })
-    .catch((error) => console.error("Error cargando médicos:", error)); // Manejo de errores
+    .catch((error) => console.log("Error cargando médicos:", error)); // Manejo de errores
 }
 
 
@@ -587,10 +588,9 @@ function cargarCitas() {
     })
     .catch(error => {
       console.error(error);
-      alert('No se pudieron cargar las citas');
+      console.log('No se pudieron cargar las citas. Vista no habilitada para mostrar todas las citas',error);
     });
 }
-document.getElementById('modalCitas').addEventListener('show.bs.modal', cargarCitas);
 
 
 function cargarUsuarios() {
@@ -615,7 +615,51 @@ function cargarUsuarios() {
     })
     .catch(error => {
       console.error(error);
-      alert('No se pudieron cargar los usuarios');
+      console.log('No se pudieron cargar los usuarios. La vista no esta habilitada para mostrar usuarios', error);
     });
 }
+
+function crearUsuarioAdmin(event) {
+  event.preventDefault(); 
+
+  const nombre = document.getElementById("txtNombreA").value.trim();
+  const correo = document.getElementById("txtCorreoA").value.trim();
+  const telefono = document.getElementById("txtTelefonoA").value.trim();
+  const edad = document.getElementById("txtEdadA").value.trim();
+  const id_rol = document.getElementById("inputState").value;
+
+  if (!nombre || !correo || !telefono || !edad || !id_rol) {
+    alert("Todos los campos son obligatorios");
+    return;
+  }
+
+  const data = {
+    nombre,
+    correo,
+    telefono,
+    edad: parseInt(edad),
+    id_rol: parseInt(id_rol)
+  };
+
+  fetch("http://localhost:3000/crear-usuario", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  })
+    .then(async (response) => {
+      const result = await response.json();
+      if (response.ok) {
+        alert("Usuario creado exitosamente");
+        document.querySelector("#formModal form").reset();
+        $("#formModal").modal("hide");
+      } else {
+        alert("Error: " + result.message);
+      }
+    })
+    .catch((error) => {
+      alert("Error en la conexión: " + error.message);
+    });
+}
+
+
 

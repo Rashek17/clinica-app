@@ -68,7 +68,9 @@
         <section class="service-section">
           <header class="service-section-header">
             <h2>Gestión de Usuarios</h2>
-            <button class="flat-button">+ Nuevo Usuario</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
+              + Nuevo Usuario
+            </button>                    
           </header>
           <div class="tiles">
             <div class="tile">
@@ -214,7 +216,70 @@
   </div>
 </div>
   
+
+<!--Formulario de creacion de usuario-->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document"> <!-- modal-lg para que sea más ancho -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formModalLabel">Formulario de Creación de Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Aquí va tu formulario -->
+        <form>
+          <div class="form-row">
+            <div class="form-group col-md-12" style="margin-left: -10px; width: 420px;">
+              <label for="">Nombre</label>
+              <input type="text" class="form-control" id="txtNombreA" placeholder="Nombre">
+            </div>
+            <div class="form-group col-md-12">
+              <label for="">Correo</label>
+              <input type="email" class="form-control" id="txtCorreoA" placeholder="Correo">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputAddress">Telefono</label>
+            <input type="number" class="form-control" id="txtTelefonoA" placeholder="(+57 3004757473)">
+          </div>
+          <div class="form-group">
+            <label for="inputAddress2">Edad</label>
+            <input type="number" class="form-control" id="txtEdadA" placeholder="Edad">
+          </div>
+          <div class="form-row"> 
+            <div class="form-group col-md-12">
+              <label for="inputState">Rol</label>
+              <select id="inputState" class="form-control">
+                <option value="s">Selecciona un rol</option>
+                <option value="1">Usuario (Paciente)</option>
+                <option value="3">Medico</option>
+                <option value="2">Administrador</option>
+              </select>              
+            </div> 
+            <div class="form-group col-md-12">
+              <label for="inputState">Especialidad del medico</label>
+              <select id="selectEspecialidadMedico" class="form-control">
+                <option value="s">Selecciona un rol</option>
+                <option value="1">Usuario (Paciente)</option>
+                <option value="3">Medico</option>
+                <option value="2">Administrador</option>
+              </select>              
+            </div>
+          </div> <br>
+          <button type="submit" class="btn btn-success" onclick="crearUsuarioAdmin(event)">Guardar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 <script src="../js/script.js"></script>
+<!-- Bootstrap JS, jQuery y Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </html>

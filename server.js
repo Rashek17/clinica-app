@@ -3,6 +3,8 @@ const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors"); // Importar CORS
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // Número de rondas de sal para el hash
 
 // Crear la aplicación Express
 const app = express();
@@ -472,7 +474,26 @@ app.get("/pacientes", (req, res) => {
   });
 });
 
+// Endpoint para crear usuario
+app.post('/crear-usuario', (req, res) => {
+  const { nombre, correo, telefono, edad, id_rol } = req.body;
 
+  if (!nombre || !correo || !telefono || !edad || !id_rol) {
+    return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+  }
+
+  const sql = `INSERT INTO usuarios (nombre, correo, telefono, edad, id_rol) VALUES (?, ?, ?, ?, ?)`;
+  const values = [nombre, correo, telefono, edad, id_rol];
+
+  connection.query(sql, values, (err, result) => {
+    if (err) {
+      console.error("Error al insertar:", err);
+      return res.status(500).json({ message: 'Error del servidor' });
+    }
+
+    res.status(201).json({ message: 'Usuario creado con éxito', id: result.insertId });
+  });
+});
 
 
 // Iniciar el servidor
