@@ -253,6 +253,7 @@ function reprogramarCita(citaId, nuevaFecha, nuevaHora) {
     .then((data) => {
       console.log("Cita reprogramada", data);
       alert("Cita reprogramada correctamente");
+      document.getElementById('popup-overlay').style.display = 'none';
       // Recargar las citas después de la actualización
       obtenerCitasUsuario();
       // Ocultar formulario de reprogramación
@@ -655,3 +656,5 @@ function crearUsuarioAdmin(event) {
       alert("Error en la conexión: " + error.message);
     });
 }
+
+
