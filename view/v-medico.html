@@ -7,6 +7,11 @@
   <title>Plataforma Médica</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/medico.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
 </head>
 
 <body>
@@ -34,11 +39,33 @@
     <div class="app-body">
       <nav class="app-body-navigation">
         <div class="navigation">
-         
-        </div>
-        <div class="footer">
-          &copy; 2025 Plataforma Médica
-        </div>
+          <div class="">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+              <div class="noticia-card bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all">
+                <div class="noticia-content">
+                  <h3 class="text-xl font-bold text-blue-600 mb-2">¿Cómo prevenir la hipertensión?</h3>
+                  <p class="text-gray-700">Descubre hábitos simples para cuidar tu presión arterial y mejorar tu salud
+                    cardiovascular.</p>
+                </div>
+              </div>
+
+              <div class="noticia-card bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all">
+                <div class="noticia-content">
+                  <h3 class="text-xl font-bold text-green-600 mb-2">Alimentación para pacientes con diabetes</h3>
+                  <p class="text-gray-700">Consejos prácticos para mantener niveles estables de glucosa con una dieta
+                    balanceada.</p>
+                </div>
+              </div>
+
+              <div class="noticia-card bg-white rounded-2xl shadow-lg p-6 hover:shadow-2xl transition-all">
+                <div class="noticia-content">
+                  <h3 class="text-xl font-bold text-purple-600 mb-2">Nuevas terapias en telemedicina</h3>
+                  <p class="text-gray-700">Conoce cómo la tecnología está transformando el acceso y seguimiento médico
+                    desde casa.</p>
+                </div>
+              </div>
+            </div>
+
       </nav>
 
       <main class="app-body-main-content">
@@ -49,41 +76,18 @@
               <input type="text" placeholder="Buscar doctor o especialidad...">
             </div>
           </div>
+          <div class="container my-4">
+            <div>
+              <strong>Citas Activas</strong>
+              <p class="text-dark">Ver tus próximas consultas</p>
+              <button id="ver-citas" class="btn btn-primary" onclick="alternarCitas()">Ver</button>
+            </div>
 
-          <div class="tiles">
-            <div class="tile">
-              <div class="tile-header">
-                <img src="https://img.icons8.com/color/48/stethoscope.png" alt="">
-                <div>
-                  <strong>Citas Activas</strong>
-                  <p class="text-light">Ver tus próximas consultas</p>
-                  <button id="ver-citas" onclick="obtenerCitasMedico()">Ver</button>
-                </div>
-                <!-- Contenedor donde se insertarán las citas -->
-                <div id="citas-medico" class="citas-container mt-4" style="display: none;"></div>
-              </div>
-            </div>
-            
-
-            <div class="tile">
-              <div class="tile-header">
-                <img src="https://img.icons8.com/color/48/medical-history.png" alt="">
-                <div>
-                  <strong>Historial Médico</strong>
-                  <p class="text-light">Consulta tus antecedentes</p>
-                </div>
-              </div>
-            </div>
-            <div class="tile">
-              <div class="tile-header">
-                <img src="https://img.icons8.com/color/48/doctor-male.png" alt="">
-                <div>
-                  <strong>Doctores</strong>
-                  <p class="text-light">Especialistas disponibles</p>
-                </div>
-              </div>
-            </div>
+            <!-- Contenedor de citas -->
+            <div id="citas-medico" class="row g-4 mt-3 d-none"></div>
           </div>
+
+
         </section>
       </main>
     </div>
@@ -91,5 +95,7 @@
 </body>
 
 <script src="../js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
 
 </html>

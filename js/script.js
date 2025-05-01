@@ -305,16 +305,26 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarCitas();
 });
 
-function obtenerCitasMedico() {
-  const idMedico = localStorage.getItem("id_usuario_login");
+
+function alternarCitas() {
   const citasContainer = document.getElementById("citas-medico");
   const verCitasButton = document.getElementById("ver-citas");
 
-  if (citasContainer.style.display === "block") {
-    citasContainer.style.display = "none";
+  const estaVisible = !citasContainer.classList.contains("d-none");
+
+  if (estaVisible) {
+    citasContainer.classList.add("d-none");
     verCitasButton.textContent = "Ver";
     return;
   }
+
+  obtenerCitasMedico();
+  verCitasButton.textContent = "Ocultar";
+}
+
+function obtenerCitasMedico() {
+  const idMedico = localStorage.getItem("id_usuario_login");
+  const citasContainer = document.getElementById("citas-medico");
 
   fetch(`http://localhost:3000/citas/medico/${idMedico}`)
     .then((response) => response.json())
@@ -322,93 +332,64 @@ function obtenerCitasMedico() {
       citasContainer.innerHTML = "";
 
       if (citas.length === 0) {
-        citasContainer.innerHTML = "<p>No hay citas registradas</p>";
+        citasContainer.innerHTML = "<div class='col-12'><p>No hay citas registradas</p></div>";
       } else {
         citas.forEach((cita) => {
           const estaCancelada = cita.estado === "cancelada";
-
           const citaHTML = `
-            <div class="transfer ${
-              estaCancelada ? "bg-gray-200 opacity-70" : ""
-            }" data-id="${cita.id_cita}">
-              <div class="transfer-logo">
-                <img src="https://img.icons8.com/color/48/stethoscope.png" alt="icono">
-              </div>
-
-              <dl class="transfer-details">
-                <div>
-                  <dt>${cita.descripcion}</dt>
-                  <dd>${cita.hora} hrs</dd>
-                </div>
-                <div>
-                  <dt>${new Date(cita.fecha).toLocaleDateString()}</dt>
-                  <dd>Fecha</dd>
-                </div>
-                <div>
-                  <dt>Paciente</dt>
-                  <dd><strong>${cita.nombre_usuario}</strong></dd>
-                </div>
-                <div>
-                  <dt>Observación</dt>
-                  <dd>
-                    <textarea class="observacion-textarea" id="observacion-${
-                      cita.id_cita
-                    }" ${estaCancelada ? "disabled" : ""}>${
+            <div class="col-12 col-sm-6 col-md-4">
+              <div class="card ${estaCancelada ? "bg-light text-muted border-secondary" : ""}">
+                <div class="card-body">
+                  <h5 class="card-title">${cita.descripcion}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">${new Date(
+                    cita.fecha
+                  ).toLocaleDateString()} - ${cita.hora} hrs</h6>
+                  <p class="card-text"><strong>Paciente:</strong> ${cita.nombre_usuario}</p>
+                  <p class="card-text"><strong>Observación:</strong></p>
+                  <textarea class="form-control mb-2" id="observacion-${cita.id_cita}" ${estaCancelada ? "disabled" : ""}>${
             cita.observacion_medica || ""
           }</textarea>
-                  </dd>
-                </div>
-                ${
-                  estaCancelada
-                    ? '<div style="color: red; font-weight: bold;">Cita cancelada</div>'
-                    : ""
-                }
-              </dl>
-
-              <div class="actions">
-                <button class="guardar-observacion-btn" data-id="${
-                  cita.id_cita
-                }" ${
+                  ${
+                    estaCancelada
+                      ? '<div class="text-danger fw-bold">Cita cancelada</div>'
+                      : ""
+                  }
+                  <button class="btn btn-success btn-sm guardar-observacion-btn me-2 mt-2" data-id="${cita.id_cita}" ${
             estaCancelada ? "disabled" : ""
           }>Guardar Observación</button>
-                <button id="btnCancelarCita-${cita.id_cita}" data-id="${
-            cita.id_cita
-          }" ${estaCancelada ? "disabled" : ""}>Cancelar Cita</button>
+                  <button class="btn btn-danger btn-sm mt-2" id="btnCancelarCita-${cita.id_cita}" data-id="${cita.id_cita}" ${
+            estaCancelada ? "disabled" : ""
+          }>Cancelar Cita</button>
+                </div>
               </div>
             </div>
           `;
-
           citasContainer.innerHTML += citaHTML;
         });
 
-        // Event listeners
-        document
-          .querySelectorAll(".guardar-observacion-btn")
-          .forEach((boton) => {
-            boton.addEventListener("click", function () {
-              const idCita = this.getAttribute("data-id");
-              guardarObservacion(idCita);
-            });
+        // Agregar eventos a los botones
+        document.querySelectorAll(".guardar-observacion-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            guardarObservacion(this.dataset.id);
           });
+        });
 
-        document
-          .querySelectorAll("[id^='btnCancelarCita-']")
-          .forEach((boton) => {
-            boton.addEventListener("click", function () {
-              const idCita = this.getAttribute("data-id");
-              cancelarCitaMedico(idCita);
-            });
+        document.querySelectorAll("[id^='btnCancelarCita-']").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            cancelarCitaMedico(this.dataset.id);
           });
+        });
       }
 
-      citasContainer.style.display = "block";
-      verCitasButton.textContent = "Ocultar";
+      citasContainer.classList.remove("d-none");
     })
     .catch((error) => {
       console.error("Error al cargar citas:", error);
-      citasContainer.innerHTML = "<p>Error al cargar citas</p>";
+      citasContainer.innerHTML = "<div class='col-12'><p>Error al cargar citas</p></div>";
+      citasContainer.classList.remove("d-none");
     });
 }
+
 
 // Función para guardar la observación
 function guardarObservacion(idCita) {
@@ -481,8 +462,12 @@ function cargarMedicosAdmin() {
         // Para la columna 'disponibilidad', usamos un select
         const disponibilidadSelect = `
           <select data-field="disponibilidad">
-            <option value="Activo" ${medico.disponibilidad === "Activo" ? "selected" : ""}>Activo</option>
-            <option value="Inactivo" ${medico.disponibilidad === "Inactivo" ? "selected" : ""}>Inactivo</option>
+            <option value="Activo" ${
+              medico.disponibilidad === "Activo" ? "selected" : ""
+            }>Activo</option>
+            <option value="Inactivo" ${
+              medico.disponibilidad === "Inactivo" ? "selected" : ""
+            }>Inactivo</option>
           </select>
         `;
 
@@ -498,24 +483,30 @@ function cargarMedicosAdmin() {
         tbody.appendChild(tr);
 
         // Hacer que los datos modificados se guarden en la base de datos para los campos contenteditable
-        tr.addEventListener("blur", function(event) {
-          if (event.target.dataset.field !== "disponibilidad") {
-            const updatedField = event.target.dataset.field;
-            const newValue = event.target.textContent;
+        tr.addEventListener(
+          "blur",
+          function (event) {
+            if (event.target.dataset.field !== "disponibilidad") {
+              const updatedField = event.target.dataset.field;
+              const newValue = event.target.textContent;
 
-            if (newValue !== medico[updatedField]) {
-              actualizarMedico(medico.id_medico, updatedField, newValue);
+              if (newValue !== medico[updatedField]) {
+                actualizarMedico(medico.id_medico, updatedField, newValue);
+              }
             }
-          }
-        }, true);
+          },
+          true
+        );
 
         // Manejo del cambio en el select de disponibilidad
         const select = tr.querySelector('select[data-field="disponibilidad"]');
-        select.addEventListener('change', function() {
+        select.addEventListener("change", function () {
           const newValue = select.value;
           if (newValue !== medico.disponibilidad) {
-            alert(`Disponibilidad de ${medico.nombre_medico} actualizada a: ${newValue}`);
-            actualizarMedico(medico.id_medico, 'disponibilidad', newValue);
+            alert(
+              `Disponibilidad de ${medico.nombre_medico} actualizada a: ${newValue}`
+            );
+            actualizarMedico(medico.id_medico, "disponibilidad", newValue);
           }
         });
       });
@@ -523,60 +514,59 @@ function cargarMedicosAdmin() {
     .catch((error) => console.log("Error cargando médicos:", error)); // Manejo de errores
 }
 
-
 // Función para actualizar un médico en la base de datos
 function actualizarMedico(idMedico, field, newValue) {
   fetch(`http://localhost:3000/medico/${idMedico}`, {
     method: "PUT",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       field: field,
-      newValue: newValue
+      newValue: newValue,
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert("Médico actualizado:", data);
     })
-  })
-  .then(response => response.json())
-  .then(data => {
-    alert("Médico actualizado:", data);
-  })
-  .catch(error => {
-    console.error("Error al actualizar médico:", error);
-  });
+    .catch((error) => {
+      console.error("Error al actualizar médico:", error);
+    });
 }
 
 // Función para eliminar un médico
 function eliminarMedico(idMedico) {
   fetch(`http://localhost:3000/medico/${idMedico}`, {
-    method: "DELETE"
+    method: "DELETE",
   })
-  .then(response => response.json())
-  .then(data => {
-    alert("Médico eliminado:", data);
-    cargarMedicosAdmin(); // Vuelve a cargar la lista de médicos
-  })
-  .catch(error => {
-    console.error("Error al eliminar médico:", error);
-  });
+    .then((response) => response.json())
+    .then((data) => {
+      alert("Médico eliminado:", data);
+      cargarMedicosAdmin(); // Vuelve a cargar la lista de médicos
+    })
+    .catch((error) => {
+      console.error("Error al eliminar médico:", error);
+    });
 }
 
 function cargarCitas() {
-  fetch('http://localhost:3000/citas')
-    .then(response => {
+  fetch("http://localhost:3000/citas")
+    .then((response) => {
       if (!response.ok) {
-        throw new Error('Error al obtener las citas');
+        throw new Error("Error al obtener las citas");
       }
       return response.json();
     })
-    .then(citas => {
-      const tbody = document.querySelector('#tblCitasAdmin tbody');
-      tbody.innerHTML = ''; // Limpiar tabla antes de cargar nueva información
+    .then((citas) => {
+      const tbody = document.querySelector("#tblCitasAdmin tbody");
+      tbody.innerHTML = ""; // Limpiar tabla antes de cargar nueva información
 
       // Verificar que la respuesta tenga datos
       console.log(citas); // Esto te ayudará a verificar qué datos estás recibiendo
 
-      citas.forEach(cita => {
-        const tr = document.createElement('tr');
+      citas.forEach((cita) => {
+        const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${cita.nombre_medico}</td>
           <td>${cita.especialidad}</td>
@@ -586,22 +576,24 @@ function cargarCitas() {
         tbody.appendChild(tr);
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
-      console.log('No se pudieron cargar las citas. Vista no habilitada para mostrar todas las citas',error);
+      console.log(
+        "No se pudieron cargar las citas. Vista no habilitada para mostrar todas las citas",
+        error
+      );
     });
 }
 
-
 function cargarUsuarios() {
-  fetch('http://localhost:3000/pacientes')
-    .then(response => response.json())
-    .then(usuarios => {
-      const tbody = document.querySelector('#modalPacientes table tbody');
-      tbody.innerHTML = ''; // Limpiar la tabla antes de cargar nueva información
+  fetch("http://localhost:3000/pacientes")
+    .then((response) => response.json())
+    .then((usuarios) => {
+      const tbody = document.querySelector("#modalPacientes table tbody");
+      tbody.innerHTML = ""; // Limpiar la tabla antes de cargar nueva información
 
-      usuarios.forEach(usuario => {
-        const tr = document.createElement('tr');
+      usuarios.forEach((usuario) => {
+        const tr = document.createElement("tr");
         tr.innerHTML = `
           <td>${usuario.nombre}</td>
           <td>${usuario.correo}</td>
@@ -613,14 +605,17 @@ function cargarUsuarios() {
         tbody.appendChild(tr);
       });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error(error);
-      console.log('No se pudieron cargar los usuarios. La vista no esta habilitada para mostrar usuarios', error);
+      console.log(
+        "No se pudieron cargar los usuarios. La vista no esta habilitada para mostrar usuarios",
+        error
+      );
     });
 }
 
 function crearUsuarioAdmin(event) {
-  event.preventDefault(); 
+  event.preventDefault();
 
   const nombre = document.getElementById("txtNombreA").value.trim();
   const correo = document.getElementById("txtCorreoA").value.trim();
@@ -638,7 +633,7 @@ function crearUsuarioAdmin(event) {
     correo,
     telefono,
     edad: parseInt(edad),
-    id_rol: parseInt(id_rol)
+    id_rol: parseInt(id_rol),
   };
 
   fetch("http://localhost:3000/crear-usuario", {
@@ -660,6 +655,3 @@ function crearUsuarioAdmin(event) {
       alert("Error en la conexión: " + error.message);
     });
 }
-
-
-
