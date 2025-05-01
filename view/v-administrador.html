@@ -16,21 +16,21 @@
     text-align: center;
     padding: 20px 0;
   }
-  
+
   .table-bordered {
     border: 1px solid #ddd !important;
   }
-  
+
   table caption {
     padding: .5em 0;
   }
-  
+
   @media screen and (max-width: 767px) {
     table caption {
       display: none;
     }
   }
-  
+
   .p {
     text-align: center;
     padding-top: 140px;
@@ -70,7 +70,7 @@
             <h2>Gestión de Usuarios</h2>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">
               + Nuevo Usuario
-            </button>                    
+            </button>
           </header>
           <div class="tiles">
             <div class="tile">
@@ -79,10 +79,11 @@
                 <h3>Médicos</h3>
               </div>
               <p>Alta y baja de médicos registrados.</p>
-              <button type="button" class="btn btn-primary flat-button" data-bs-toggle="modal" data-bs-target="#modalMedicos">
+              <button type="button" class="btn btn-primary flat-button" data-bs-toggle="modal"
+                data-bs-target="#modalMedicos">
                 Mostrar Médicos
               </button>
-              
+
             </div>
             <div class="tile">
               <div class="tile-header">
@@ -90,7 +91,8 @@
                 <h3>Pacientes</h3>
               </div>
               <p>Alta y baja de pacientes registrados.</p>
-              <button type="button" class="btn btn-primary flat-button" data-bs-toggle="modal" data-bs-target="#modalPacientes">
+              <button type="button" class="btn btn-primary flat-button" data-bs-toggle="modal"
+                data-bs-target="#modalPacientes">
                 Mostrar Pacientes
               </button>
             </div>
@@ -105,7 +107,8 @@
             <div class="tile">
               <h3>Citas por día</h3>
               <p>Visualización global de citas agendadas.</p>
-              <button type="button" class="btn btn-primary flat-button" data-bs-toggle="modal" data-bs-target="#modalCitas">
+              <button type="button" class="btn btn-primary flat-button" data-bs-toggle="modal"
+                data-bs-target="#modalCitas">
                 Mostrar Citas
               </button>
             </div>
@@ -137,7 +140,7 @@
                 </tr>
               </thead>
               <tbody>
-               
+
               </tbody>
             </table>
           </div>
@@ -171,7 +174,7 @@
                 </tr>
               </thead>
               <tbody>
-                
+
               </tbody>
             </table>
           </div>
@@ -183,97 +186,94 @@
     </div>
   </div>
 
-<!-- Modal Citas -->
-<div class="modal fade" id="modalCitas" tabindex="-1" aria-labelledby="modalCitasLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modalMedicosLabel">Administrar Citas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Aquí pegamos tu tabla -->
-        <div class="table-responsive">
-          <table class="table table-bordered table-hover" id="tblCitasAdmin">
-            <thead>
-              <tr>
-                <th>Nombre Médico</th>
-                <th>Especialidad</th>
-                <th>Día de Cita</th>
-                <th>Total de Citas</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Las filas de citas se llenarán dinámicamente -->
-            </tbody>
-          </table>
+  <!-- Modal Citas -->
+  <div class="modal fade" id="modalCitas" tabindex="-1" aria-labelledby="modalCitasLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalMedicosLabel">Administrar Citas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Aquí pegamos tu tabla -->
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover" id="tblCitasAdmin">
+              <thead>
+                <tr>
+                  <th>Nombre Médico</th>
+                  <th>Especialidad</th>
+                  <th>Día de Cita</th>
+                  <th>Total de Citas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Las filas de citas se llenarán dinámicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
     </div>
   </div>
-</div>
-  
 
-<!--Formulario de creacion de usuario-->
-<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document"> <!-- modal-lg para que sea más ancho -->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="formModalLabel">Formulario de Creación de Usuario</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- Aquí va tu formulario -->
-        <form>
-          <div class="form-row">
-            <div class="form-group col-md-12" style="margin-left: -10px; width: 420px;">
-              <label for="">Nombre</label>
-              <input type="text" class="form-control" id="txtNombreA" placeholder="Nombre">
+
+  <!--Formulario de creacion de usuario-->
+  <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document"> <!-- modal-lg para que sea más ancho -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="formModalLabel">Formulario de Creación de Usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Aquí va tu formulario -->
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-12" style="margin-left: -10px; width: 420px;">
+                <label for="">Nombre</label>
+                <input type="text" class="form-control" id="txtNombreA" placeholder="Nombre">
+              </div>
+              <div class="form-group col-md-12">
+                <label for="">Correo</label>
+                <input type="email" class="form-control" id="txtCorreoA" placeholder="Correo">
+              </div>
             </div>
-            <div class="form-group col-md-12">
-              <label for="">Correo</label>
-              <input type="email" class="form-control" id="txtCorreoA" placeholder="Correo">
+            <div class="form-group">
+              <label for="inputAddress">Telefono</label>
+              <input type="number" class="form-control" id="txtTelefonoA" placeholder="(+57 3004757473)">
             </div>
-          </div>
-          <div class="form-group">
-            <label for="inputAddress">Telefono</label>
-            <input type="number" class="form-control" id="txtTelefonoA" placeholder="(+57 3004757473)">
-          </div>
-          <div class="form-group">
-            <label for="inputAddress2">Edad</label>
-            <input type="number" class="form-control" id="txtEdadA" placeholder="Edad">
-          </div>
-          <div class="form-row"> 
-            <div class="form-group col-md-12">
-              <label for="inputState">Rol</label>
-              <select id="inputState" class="form-control">
-                <option value="s">Selecciona un rol</option>
-                <option value="1">Usuario (Paciente)</option>
-                <option value="3">Medico</option>
-                <option value="2">Administrador</option>
-              </select>              
-            </div> 
-            <div class="form-group col-md-12">
-              <label for="inputState">Especialidad del medico</label>
-              <select id="selectEspecialidadMedico" class="form-control">
-                <option value="s">Selecciona un rol</option>
-                <option value="1">Usuario (Paciente)</option>
-                <option value="3">Medico</option>
-                <option value="2">Administrador</option>
-              </select>              
+            <div class="form-group">
+              <label for="inputAddress2">Edad</label>
+              <input type="number" class="form-control" id="txtEdadA" placeholder="Edad">
             </div>
-          </div> <br>
-          <button type="submit" class="btn btn-success" onclick="crearUsuarioAdmin(event)">Guardar</button>
-        </form>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="inputState">Rol</label>
+                <select id="inputState" class="form-control">
+                  <option value="s">Selecciona un rol</option>
+                  <option value="1">Usuario (Paciente)</option>
+                  <option value="3">Medico</option>
+                  <option value="2">Administrador</option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-12" id="especialidadGroup" style="display: none;">
+                <label for="txtEspecialidadA">Especialidad del médico</label>
+                <input type="text" class="form-control" id="txtEspecialidadA" placeholder="Especialidad del médico">
+              </div>
+            </div> <br>
+            <button type="submit" style="width: 100%;" class="btn btn-success" onclick="crearUsuarioAdmin(event)">Guardar</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 </body>
 <script src="../js/script.js"></script>

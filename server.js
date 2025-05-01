@@ -3,7 +3,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const bodyParser = require("body-parser");
 const cors = require("cors"); // Importar CORS
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = 10; // Número de rondas de sal para el hash
 
 // Crear la aplicación Express
@@ -18,9 +18,9 @@ app.use(cors()); // Habilitar CORS para todas las rutas
 // Crear la conexión a MySQL
 const connection = mysql.createConnection({
   host: "localhost",
-  user: "root", 
-  password: "", 
-  database: "clinica-app", 
+  user: "root",
+  password: "",
+  database: "clinica-app",
 });
 
 // Conectar a la base de datos
@@ -109,11 +109,9 @@ app.post("/crear-cita", (req, res) => {
     const disponibilidad = results[0].disponibilidad;
 
     if (disponibilidad !== "Activo") {
-      return res
-        .status(400)
-        .json({
-          message: "El médico está inactivo, no se puede agendar la cita.",
-        });
+      return res.status(400).json({
+        message: "El médico está inactivo, no se puede agendar la cita.",
+      });
     }
 
     // Si el médico está activo, proceder a guardar la cita
@@ -284,10 +282,10 @@ app.put("/citas/cancelar/:id", (req, res) => {
   });
 });
 
-
 // Endpoint para traer médicos + cantidad de citas
-app.get('/medicos-citas', (req, res) => {
-  connection.query(`
+app.get("/medicos-citas", (req, res) => {
+  connection.query(
+    `
     SELECT 
         u.id_usuario AS id_medico,
         u.nombre AS nombre_medico,
@@ -298,7 +296,7 @@ app.get('/medicos-citas', (req, res) => {
         COUNT(c.id_cita) AS cantidad_citas
     FROM 
         usuarios u
-    INNER JOIN 
+    LEFT JOIN 
         medico m ON u.id_usuario = m.id_medico
     LEFT JOIN 
         citas c ON m.id_medico = c.id_medico
@@ -308,28 +306,30 @@ app.get('/medicos-citas', (req, res) => {
         u.id_usuario, u.nombre, m.especialidad, m.telefono, m.correo, m.disponibilidad
     ORDER BY 
         cantidad_citas DESC
-  `, (error, results) => {
-    if (error) {
-      console.error('Error al obtener médicos:', error);
-      res.status(500).json({ error: 'Error al obtener médicos' });
-    } else {
-      res.json(results); // Enviamos los resultados obtenidos
+  `,
+    (error, results) => {
+      if (error) {
+        console.error("Error al obtener médicos:", error);
+        res.status(500).json({ error: "Error al obtener médicos" });
+      } else {
+        res.json(results); // Enviamos los resultados obtenidos
+      }
     }
-  });
+  );
 });
 
 // Endpoint para actualizar un médico
-app.put('/medico/:id', (req, res) => {
+app.put("/medico/:id", (req, res) => {
   const { id } = req.params;
   const { field, newValue } = req.body;
 
   // Validar que field y newValue no sean undefined
   if (!field || newValue === undefined) {
-    return res.status(400).json({ error: 'Campo o valor no válidos' });
+    return res.status(400).json({ error: "Campo o valor no válidos" });
   }
 
   // Si el campo que se está actualizando es 'nombre_medico', lo actualizamos en la tabla 'usuarios'
-  if (field === 'nombre_medico') {
+  if (field === "nombre_medico") {
     const query = `
       UPDATE usuarios
       SET nombre = ?
@@ -338,14 +338,16 @@ app.put('/medico/:id', (req, res) => {
 
     connection.query(query, [newValue, id], (error, results) => {
       if (error) {
-        console.error('Error al actualizar el nombre del médico:', error);
-        return res.status(500).json({ error: 'Error al actualizar el nombre del médico' });
+        console.error("Error al actualizar el nombre del médico:", error);
+        return res
+          .status(500)
+          .json({ error: "Error al actualizar el nombre del médico" });
       }
 
       if (results.affectedRows > 0) {
-        res.json({ message: 'Nombre del médico actualizado correctamente' });
+        res.json({ message: "Nombre del médico actualizado correctamente" });
       } else {
-        res.status(404).json({ error: 'Médico no encontrado' });
+        res.status(404).json({ error: "Médico no encontrado" });
       }
     });
   } else {
@@ -358,30 +360,28 @@ app.put('/medico/:id', (req, res) => {
 
     connection.query(query, [field, newValue, id], (error, results) => {
       if (error) {
-        console.error('Error al actualizar el médico:', error);
-        return res.status(500).json({ error: 'Error al actualizar el médico' });
+        console.error("Error al actualizar el médico:", error);
+        return res.status(500).json({ error: "Error al actualizar el médico" });
       }
 
       if (results.affectedRows > 0) {
-        res.json({ message: 'Médico actualizado correctamente' });
+        res.json({ message: "Médico actualizado correctamente" });
       } else {
-        res.status(404).json({ error: 'Médico no encontrado' });
+        res.status(404).json({ error: "Médico no encontrado" });
       }
     });
   }
 });
 
-
-
 // Endpoint para eliminar un médico y sus citas relacionadas usando transacción
-app.delete('/medico/:id', (req, res) => {
+app.delete("/medico/:id", (req, res) => {
   const { id } = req.params;
 
   // Iniciar la transacción
   connection.beginTransaction((err) => {
     if (err) {
-      console.error('Error iniciando la transacción:', err);
-      return res.status(500).json({ error: 'Error iniciando transacción' });
+      console.error("Error iniciando la transacción:", err);
+      return res.status(500).json({ error: "Error iniciando transacción" });
     }
 
     // 1. Eliminar citas relacionadas
@@ -392,8 +392,8 @@ app.delete('/medico/:id', (req, res) => {
     connection.query(deleteCitasQuery, [id], (error, results) => {
       if (error) {
         return connection.rollback(() => {
-          console.error('Error al eliminar citas:', error);
-          res.status(500).json({ error: 'Error al eliminar citas' });
+          console.error("Error al eliminar citas:", error);
+          res.status(500).json({ error: "Error al eliminar citas" });
         });
       }
 
@@ -405,14 +405,14 @@ app.delete('/medico/:id', (req, res) => {
       connection.query(deleteMedicoQuery, [id], (error, results) => {
         if (error) {
           return connection.rollback(() => {
-            console.error('Error al eliminar médico:', error);
-            res.status(500).json({ error: 'Error al eliminar médico' });
+            console.error("Error al eliminar médico:", error);
+            res.status(500).json({ error: "Error al eliminar médico" });
           });
         }
 
         if (results.affectedRows === 0) {
           return connection.rollback(() => {
-            res.status(404).json({ error: 'Médico no encontrado' });
+            res.status(404).json({ error: "Médico no encontrado" });
           });
         }
 
@@ -420,20 +420,19 @@ app.delete('/medico/:id', (req, res) => {
         connection.commit((err) => {
           if (err) {
             return connection.rollback(() => {
-              console.error('Error al confirmar la transacción:', err);
-              res.status(500).json({ error: 'Error al confirmar transacción' });
+              console.error("Error al confirmar la transacción:", err);
+              res.status(500).json({ error: "Error al confirmar transacción" });
             });
           }
 
-          res.json({ message: 'Médico y sus citas eliminados correctamente' });
+          res.json({ message: "Médico y sus citas eliminados correctamente" });
         });
       });
     });
   });
 });
 
-
-app.get('/citas', (req, res) => {
+app.get("/citas", (req, res) => {
   const sql = `
     SELECT m.id_medico, 
            u.nombre AS nombre_medico, 
@@ -447,16 +446,15 @@ app.get('/citas', (req, res) => {
     GROUP BY m.id_medico, u.nombre, m.especialidad, dia_cita 
     ORDER BY dia_cita ASC, nombre_medico ASC;
   `;
-  
+
   connection.query(sql, (err, results) => {
     if (err) {
-      console.error('Error al obtener citas:', err);
-      return res.status(500).json({ message: 'Error al obtener las citas' });
+      console.error("Error al obtener citas:", err);
+      return res.status(500).json({ message: "Error al obtener las citas" });
     }
     res.status(200).json(results);
   });
 });
-
 
 app.get("/pacientes", (req, res) => {
   const query = `
@@ -464,7 +462,7 @@ app.get("/pacientes", (req, res) => {
     FROM usuarios u
     INNER JOIN rol r ON u.id_rol = r.id_rol;
   `;
-  
+
   connection.query(query, (err, results) => {
     if (err) {
       console.error(err);
@@ -474,27 +472,78 @@ app.get("/pacientes", (req, res) => {
   });
 });
 
-// Endpoint para crear usuario
-app.post('/crear-usuario', (req, res) => {
-  const { nombre, correo, telefono, edad, id_rol } = req.body;
+// Endpoint para crear un nuevo usuario (paciente o médico y administrador)
+app.post("/crear-usuario", (req, res) => {
+  const { nombre, correo, telefono, edad, id_rol, especialidad } = req.body;
 
   if (!nombre || !correo || !telefono || !edad || !id_rol) {
-    return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    return res
+      .status(400)
+      .json({ message: "Todos los campos son obligatorios" });
   }
 
-  const sql = `INSERT INTO usuarios (nombre, correo, telefono, edad, id_rol) VALUES (?, ?, ?, ?, ?)`;
-  const values = [nombre, correo, telefono, edad, id_rol];
+  const insertUserSQL = `INSERT INTO usuarios (nombre, correo, telefono, edad, id_rol) VALUES (?, ?, ?, ?, ?)`;
+  const userValues = [nombre, correo, telefono, edad, id_rol];
 
-  connection.query(sql, values, (err, result) => {
+  connection.query(insertUserSQL, userValues, (err, userResult) => {
     if (err) {
-      console.error("Error al insertar:", err);
-      return res.status(500).json({ message: 'Error del servidor' });
+      console.error("❌ Error al insertar en usuarios:", err);
+      return res.status(500).json({ message: "Error al crear el usuario" });
     }
 
-    res.status(201).json({ message: 'Usuario creado con éxito', id: result.insertId });
+    const id_usuario = userResult.insertId;
+    console.log("✅ Usuario insertado con ID:", id_usuario);
+
+    if (parseInt(id_rol) !== 3) {
+      return res.status(201).json({
+        message: "Usuario creado con éxito",
+        id_usuario,
+      });
+    }
+
+    // Validar campos de médico
+    if (!especialidad) {
+      return res
+        .status(400)
+        .json({ message: "La especialidad es obligatoria para médicos" });
+    }
+
+    const checkEspecialidadSQL = `SELECT * FROM medico WHERE especialidad = ?`;
+    connection.query(checkEspecialidadSQL, [especialidad], (err2, result2) => {
+      if (err2) {
+        console.error("❌ Error al verificar especialidad:", err2);
+        return res
+          .status(500)
+          .json({ message: "Error al verificar la especialidad" });
+      }
+
+      if (result2.length > 0) {
+        return res
+          .status(400)
+          .json({ message: "Ya existe un médico con esta especialidad" });
+      }
+
+      const insertMedicoSQL = `INSERT INTO medico (especialidad, telefono, correo, disponibilidad) VALUES (?, ?, ?, 'Activo')`;
+      const medicoValues = [especialidad, telefono, correo];
+
+      connection.query(insertMedicoSQL, medicoValues, (err3, medicoResult) => {
+        if (err3) {
+          console.error("❌ Error al insertar en medico:", err3);
+          return res.status(500).json({
+            message: "Usuario creado, pero error al registrar al médico",
+          });
+        }
+
+        console.log("✅ Médico insertado con ID:", medicoResult.insertId);
+        return res.status(201).json({
+          message: "Usuario y médico creados con éxito",
+          id_usuario,
+          id_medico: medicoResult.insertId,
+        });
+      });
+    });
   });
 });
-
 
 // Iniciar el servidor
 app.listen(port, () => {

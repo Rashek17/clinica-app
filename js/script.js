@@ -304,6 +304,15 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarMedicosAdmin();
   cargarUsuarios();
   cargarCitas();
+
+  document.getElementById('inputState').addEventListener('change', function () {
+    var especialidadGroup = document.getElementById('especialidadGroup');
+    if (this.value === '3') { // 3 es Medico
+      especialidadGroup.style.display = 'block';
+    } else {
+      especialidadGroup.style.display = 'none';
+    }
+  });
 });
 
 
@@ -623,12 +632,14 @@ function crearUsuarioAdmin(event) {
   const telefono = document.getElementById("txtTelefonoA").value.trim();
   const edad = document.getElementById("txtEdadA").value.trim();
   const id_rol = document.getElementById("inputState").value;
+  const especialidad = document.getElementById("txtEspecialidadA").value.trim(); // Nuevo
 
   if (!nombre || !correo || !telefono || !edad || !id_rol) {
     alert("Todos los campos son obligatorios");
     return;
   }
 
+  // Preparar datos
   const data = {
     nombre,
     correo,
@@ -636,6 +647,15 @@ function crearUsuarioAdmin(event) {
     edad: parseInt(edad),
     id_rol: parseInt(id_rol),
   };
+
+  // Si el rol es Médico, agregar la especialidad
+  if (parseInt(id_rol) === 3) {
+    if (!especialidad) {
+      alert("Debe ingresar la especialidad del médico");
+      return;
+    }
+    data.especialidad = especialidad;
+  }
 
   fetch("http://localhost:3000/crear-usuario", {
     method: "POST",
@@ -656,5 +676,4 @@ function crearUsuarioAdmin(event) {
       alert("Error en la conexión: " + error.message);
     });
 }
-
 
