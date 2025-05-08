@@ -6,7 +6,6 @@ const cors = require("cors"); // Importar CORS
 const bcrypt = require("bcrypt");
 const saltRounds = 10; // Número de rondas de sal para el hash
 
- 
 // Crear la aplicación Express
 const app = express();
 const port = 3000;
@@ -545,7 +544,6 @@ app.post("/crear-usuario", (req, res) => {
     });
   });
 });
-
 
 module.exports = app;
 
