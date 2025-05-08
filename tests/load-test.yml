@@ -1,0 +1,18 @@
+#Ejecutar esta prueba de carga con el siguiente comando:npx artillery run load-test.yml
+# Asegúrate de tener Artillery instalado: npm install --save-dev artillery
+# Puedes instalarlo globalmente o como una dependencia de desarrollo en tu proyecto.
+
+config:
+  target: 'http://localhost:3000'  # URL de tu servidor Node.js
+  phases:
+    - duration: 60  # Duración de la prueba en segundos
+      arrivalRate: 5  # Número de usuarios virtuales que entran por segundo
+      name: "Prueba de carga inicial"
+    - duration: 60
+      arrivalRate: 10
+      name: "Prueba de carga con más usuarios"
+
+scenarios:
+  - flow:
+      - get:
+          url: "/api/usuarios"  # Ruta que deseas probar
