@@ -3,10 +3,10 @@
 # Puedes instalarlo globalmente o como una dependencia de desarrollo en tu proyecto.
 
 config:
-  target: 'http://localhost:3000'  # URL de tu servidor Node.js
+  target: 'http://localhost:3000'
   phases:
-    - duration: 60  # Duración de la prueba en segundos
-      arrivalRate: 5  # Número de usuarios virtuales que entran por segundo
+    - duration: 60
+      arrivalRate: 5
       name: "Prueba de carga inicial"
     - duration: 60
       arrivalRate: 10
@@ -15,4 +15,4 @@ config:
 scenarios:
   - flow:
       - get:
-          url: "/api/usuarios"  # Ruta que deseas probar
+          url: "/pacientes"  # Ruta corregida
