@@ -1,0 +1,28 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 100  # usuarios/segundo
+  defaults:
+    headers:
+      Content-Type: "application/json"
+
+scenarios:
+  - name: Prueba de carga general
+    flow:
+      - post:
+          url: "/login"
+          json:
+            username: "franco@Gmal.com"
+      - post:
+          url: "/crear-cita"
+          json:
+            id_usuario: 1
+            descripcion: "Chequeo general"
+            fecha: "2025-06-10"
+            hora: "10:00"
+            id_medico: 3
+
+
+# para ejecutar este test, usa el comando: artillery run stress-test.yml -o reporte.json
+# para crear un reporte HTML, usa: artillery report -o reporte.html reporte.json

@@ -132,3 +132,5 @@ require('chromedriver');
     await driver.quit();
   }
 })();
+//Para ejecutar este test, asegúrate de tener instalado Node.js y el paquete selenium-webdriver.
+// Puedes instalarlo con el siguiente comando: node pruebas-e2e-citas-medicas.js
