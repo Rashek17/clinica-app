@@ -1,3 +1,4 @@
+// Para ejecutar este test, asegúrate de tener tu servidor corriendo y que las rutas estén correctamente configuradas. Por ultimo ejecuta el siguiente comando npx jest flujoCompleto.test.js
 const request = require("supertest"); //utilizada para realizar pruebas HTTP en tus aplicaciones web. Se utiliza comúnmente junto con herramientas como Mocha o Jest
 const app = require("../server"); // Ajusta si tu archivo se llama distinto
 

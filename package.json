@@ -13,10 +13,11 @@
     "axios": "^1.9.0",
     "bcrypt": "^5.1.1",
     "body-parser": "^2.2.0",
+    "chromedriver": "^137.0.1",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "mysql2": "^3.14.0",
-    "selenium-webdriver": "^4.32.0"
+    "selenium-webdriver": "^4.33.0"
   },
   "devDependencies": {
     "artillery": "^2.0.22",

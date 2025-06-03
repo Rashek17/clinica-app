@@ -39,3 +39,6 @@ async function testConcurrencia() {
 
 // Ejecutar la función de prueba
 testConcurrencia();
+
+//Para ejecutar esta prueba, asegúrate de que el servidor esté corriendo y que la ruta /crear-cita esté configurada para manejar las peticiones POST.
+// Luego, ejecuta el script con Node.js: node tests/test_concurrencia_http.test.js

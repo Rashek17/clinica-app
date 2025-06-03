@@ -77,11 +77,11 @@
                     <h2>Registrarse</h2>
                     <form onsubmit="event.preventDefault()">
                         <div class="field-wrapper">
-                            <input type="text" name="email" placeholder="correo electrónico">
+                            <input type="text" id="txtusername" name="email" placeholder="correo electrónico">
                             <label>Correo electrónico</label>
                         </div>
                         <div class="field-wrapper">
-                            <input type="password" name="password" placeholder="contraseña" autocomplete="new-password">
+                            <input type="password" id="txtpassword" name="password" placeholder="contraseña" autocomplete="new-password">
                             <label>Contraseña</label>
                         </div>
                         <div class="field-wrapper">
@@ -91,7 +91,7 @@
                         <div class="field-wrapper">
                             <input type="submit" onclick="showThankYou()">
                         </div>
-                        <span class="singin" onclick="login()">¿Ya tienes cuenta? Inicia sesión</span>
+                        <span class="singin" id="loginBtn" onclick="login()">¿Ya tienes cuenta? Inicia sesión</span>
                     </form>
                 </div>
             </div>
