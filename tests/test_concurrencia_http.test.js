@@ -4,11 +4,11 @@ const URL = "http://localhost:3000/crear-cita";
 
 // Datos de prueba para las citas
 const payloads = [
-  { id_usuario: 36, descripcion: "Consulta", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
-  { id_usuario: 37, descripcion: "Dolor de cabeza", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
-  { id_usuario: 38, descripcion: "Chequeo", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
-  { id_usuario: 39, descripcion: "Consulta general", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
-  { id_usuario: 40, descripcion: "Dolor muscular", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
+  { id_usuario: 22, descripcion: "Consulta", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
+  { id_usuario: 23, descripcion: "Dolor de cabeza", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
+  { id_usuario: 24, descripcion: "Chequeo", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
+  { id_usuario: 25, descripcion: "Consulta general", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
+  { id_usuario: 26, descripcion: "Dolor muscular", fecha: "2025-05-08", hora: "10:00:00", id_medico: 1 },
 ];
 
 // Función para probar la concurrencia de las peticiones

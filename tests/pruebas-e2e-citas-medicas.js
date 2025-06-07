@@ -12,7 +12,7 @@ require('chromedriver');
   await driver.manage().window().maximize();
   try {
     // URL del sistema
-    await driver.get('http://127.0.0.1:5500/index.html');
+    await driver.get('http://127.0.0.1:5500/index.html ');
     await driver.sleep(3000); // para ver el navegador abierto por unos segundos
 
     await driver.wait(until.alertIsPresent());
